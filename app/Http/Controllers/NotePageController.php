@@ -13,9 +13,7 @@ use Illuminate\View\View;
 
 class NotePageController extends Controller
 {
-    public function __construct(private readonly TextEmbeddingService $embeddings)
-    {
-    }
+    public function __construct(private readonly TextEmbeddingService $embeddings) {}
 
     public function index(Request $request): View
     {
@@ -126,15 +124,19 @@ class NotePageController extends Controller
      */
     private function searchScore(array $queryEmbedding, array $queryTerms, Note $note): float
     {
-        $score = $this->embeddings->cosineSimilarity($queryEmbedding, $note->embedding);
+        $semanticScore = $this->embeddings->cosineSimilarity($queryEmbedding, $note->embedding);
         $haystack = str($note->title.' '.$note->content)->lower();
+        $matchedTerms = 0;
 
         foreach ($queryTerms as $term) {
             if ($haystack->contains($term)) {
-                $score += 0.25;
+                $matchedTerms++;
             }
         }
 
-        return round($score, 6);
+        $keywordScore = $queryTerms === [] ? 0.0 : $matchedTerms / count($queryTerms);
+        $score = ($semanticScore * 0.7) + ($keywordScore * 0.3);
+
+        return round(min(1.0, $score), 6);
     }
 }
