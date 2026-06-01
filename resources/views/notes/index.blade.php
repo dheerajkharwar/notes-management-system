@@ -54,6 +54,11 @@
                     <div class="mt-auto flex flex-wrap justify-end gap-2">
                         <a href="{{ route('notes.show', $note) }}" class="rounded-md border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100">View</a>
                         <a href="{{ route('notes.edit', $note) }}" class="rounded-md border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100">Edit</a>
+                        <form method="POST" action="{{ route('notes.destroy', $note) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition hover:bg-red-50">Delete</button>
+                        </form>
                     </div>
                 </article>
             @empty
