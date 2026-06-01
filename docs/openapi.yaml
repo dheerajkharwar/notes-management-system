@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: AI Notes Management API
+  version: 1.0.0
+paths:
+  /api/notes:
+    get:
+      summary: List notes
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+      responses:
+        '200':
+          description: Paginated note collection
+    post:
+      summary: Create a note
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '201':
+          description: Note created
+        '422':
+          description: Validation error
+  /api/notes/{id}:
+    get:
+      summary: Get one note
+      parameters:
+        - $ref: '#/components/parameters/NoteId'
+      responses:
+        '200':
+          description: Note details
+        '404':
+          description: Note not found
+    put:
+      summary: Update a note
+      parameters:
+        - $ref: '#/components/parameters/NoteId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '200':
+          description: Note updated
+        '422':
+          description: Validation error
+    delete:
+      summary: Delete a note
+      parameters:
+        - $ref: '#/components/parameters/NoteId'
+      responses:
+        '204':
+          description: Note deleted
+  /api/notes/search:
+    get:
+      summary: Semantic search notes
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 2
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 25
+      responses:
+        '200':
+          description: Ranked semantic matches
+  /api/notes/{id}/summary:
+    post:
+      summary: Generate a note summary
+      parameters:
+        - $ref: '#/components/parameters/NoteId'
+      responses:
+        '200':
+          description: Note with generated summary
+components:
+  parameters:
+    NoteId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    NoteInput:
+      type: object
+      required:
+        - title
+        - content
+      properties:
+        title:
+          type: string
+          maxLength: 180
+        content:
+          type: string
+          minLength: 5
