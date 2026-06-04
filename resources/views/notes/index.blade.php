@@ -10,10 +10,10 @@
                 <h2 class="text-2xl font-bold text-zinc-950">Notes list</h2>
             </div>
 
-            <form method="GET" action="{{ route('notes.index') }}" class="flex w-full flex-col gap-2 sm:flex-row lg:max-w-xl">
+            <form method="GET" action="{{ route('notes.index') }}" class="flex w-full flex-col gap-2 sm:flex-row lg:max-w-xl" data-loading>
                 <label for="q" class="sr-only">Semantic search</label>
                 <input id="q" name="q" value="{{ $query }}" type="search" placeholder="Search notes by meaning" class="min-h-11 flex-1 rounded-md border border-zinc-300 bg-white px-3 text-sm outline-none ring-teal-600/20 transition focus:border-teal-700 focus:ring-4">
-                <button type="submit" class="min-h-11 rounded-md bg-teal-700 px-4 text-sm font-semibold text-white transition hover:bg-teal-800">Search</button>
+                <button type="submit" data-loading-text="Searching" class="min-h-11 rounded-md bg-teal-700 px-4 text-sm font-semibold text-white transition hover:bg-teal-800">Search</button>
                 @if ($isSearch)
                     <a href="{{ route('notes.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100">Clear</a>
                 @endif
@@ -54,10 +54,10 @@
                     <div class="mt-auto flex flex-wrap justify-end gap-2">
                         <a href="{{ route('notes.show', $note) }}" class="rounded-md border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100">View</a>
                         <a href="{{ route('notes.edit', $note) }}" class="rounded-md border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100">Edit</a>
-                        <form method="POST" action="{{ route('notes.destroy', $note) }}">
+                        <form method="POST" action="{{ route('notes.destroy', $note) }}" data-loading>
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition hover:bg-red-50">Delete</button>
+                            <button type="submit" data-loading-text="Deleting" class="rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition hover:bg-red-50">Delete</button>
                         </form>
                     </div>
                 </article>

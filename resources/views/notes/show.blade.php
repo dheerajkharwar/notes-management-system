@@ -22,18 +22,18 @@
         <section class="mt-6 rounded-md bg-zinc-50 p-4">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h3 class="text-base font-semibold text-zinc-950">AI summary</h3>
-                <form method="POST" action="{{ route('notes.summary', $note) }}">
+                <form method="POST" action="{{ route('notes.summary', $note) }}" data-loading>
                     @csrf
-                    <button type="submit" class="rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100">Generate summary</button>
+                    <button type="submit" data-loading-text="Generating" class="rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100">Generate summary</button>
                 </form>
             </div>
             <p class="mt-3 text-sm leading-6 text-zinc-700">{{ $note->summary ?: 'No summary generated yet.' }}</p>
         </section>
 
-        <form method="POST" action="{{ route('notes.destroy', $note) }}" class="mt-6 flex justify-end">
+        <form method="POST" action="{{ route('notes.destroy', $note) }}" class="mt-6 flex justify-end" data-loading>
             @csrf
             @method('DELETE')
-            <button type="submit" class="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50">Delete note</button>
+            <button type="submit" data-loading-text="Deleting" class="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50">Delete note</button>
         </form>
     </article>
 @endsection

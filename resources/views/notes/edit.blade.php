@@ -12,7 +12,7 @@
             <a href="{{ route('notes.show', $note) }}" class="rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100">View note</a>
         </div>
 
-        <form method="POST" action="{{ route('notes.update', $note) }}" class="rounded-md border border-zinc-200 bg-white p-5 shadow-sm">
+        <form method="POST" action="{{ route('notes.update', $note) }}" class="rounded-md border border-zinc-200 bg-white p-5 shadow-sm" data-loading>
             @include('notes._form', ['note' => $note])
         </form>
     </section>

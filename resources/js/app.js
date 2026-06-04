@@ -1,5 +1,26 @@
 import './bootstrap';
 
+document.querySelectorAll('form[data-loading]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+        const button = event.submitter;
+
+        if (!button || button.disabled) {
+            return;
+        }
+
+        const label = button.dataset.loadingText || 'Loading';
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+        button.classList.add('cursor-wait', 'opacity-80');
+        button.innerHTML = `
+            <span class="inline-flex items-center gap-2">
+                <span class="size-4 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
+                <span>${label}</span>
+            </span>
+        `;
+    });
+});
+
 const app = document.querySelector('#notes-app');
 
 if (app) {

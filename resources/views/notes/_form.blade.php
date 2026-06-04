@@ -34,7 +34,7 @@
 
     <div class="flex flex-wrap items-center justify-end gap-2">
         <a href="{{ isset($note) ? route('notes.show', $note) : route('notes.index') }}" class="rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100">Cancel</a>
-        <button type="submit" class="rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800">
+        <button type="submit" data-loading-text="{{ isset($note) ? 'Updating' : 'Creating' }}" class="rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800">
             {{ isset($note) ? 'Update note' : 'Create note' }}
         </button>
     </div>
